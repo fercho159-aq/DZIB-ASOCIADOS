@@ -117,6 +117,12 @@ background:none;
 [data-theme="light"] .theme-toggle__icon--sun{display:none}
 [data-theme="light"] .theme-toggle__icon--moon{display:block}
 [data-theme="light"] .navbar.scrolled{background:rgba(245,243,239,0.9)}
+[data-theme="light"] .page-hero::before{
+background:linear-gradient(to bottom, rgba(245,243,239,0.75), rgba(235,232,226,0.88));
+}
+[data-theme="light"] .testimonios-section{
+background-blend-mode:multiply;
+}
 [data-theme="light"] .navbar__toggle span{background:var(--text-primary)}
 [data-theme="light"] ::-webkit-scrollbar-track{background:var(--bg-primary)}
 
@@ -252,6 +258,17 @@ background:var(--bg-card);
 border:1px solid transparent;
 border-radius:2px;
 transition:border-color .4s,transform .3s;
+position:relative;
+overflow:hidden;
+}
+.stat-big::before{
+content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+background:radial-gradient(circle at center,rgba(201,168,76,0.03),transparent 70%);
+opacity:0;
+transition:opacity .6s;
+}
+.stat-big:hover::before{
+opacity:1;
 }
 .stat-big:hover{
 border-color:var(--gold);
@@ -304,7 +321,7 @@ overflow:hidden;
 .caso-card:hover{
 border-color:var(--gold);
 transform:translateY(-4px);
-box-shadow:0 0 40px rgba(201,168,76,0.08);
+box-shadow:0 0 40px rgba(201,168,76,0.12),0 0 80px rgba(201,168,76,0.04);
 }
 .caso-card__header{
 display:flex;align-items:center;justify-content:space-between;
@@ -372,7 +389,7 @@ min-height:340px;
 position:absolute;top:0;left:0;width:100%;
 opacity:0;
 pointer-events:none;
-transition:opacity .8s;
+transition:opacity 1s cubic-bezier(.25,.46,.45,.94);
 }
 .testimonial-card.active{
 opacity:1;
@@ -387,6 +404,9 @@ text-align:center;
 transition:border-color .4s;
 }
 .testimonial-card__inner:hover{border-color:var(--border)}
+.testimonial-card.active .testimonial-card__inner{
+border-color:rgba(201,168,76,0.1);
+}
 .testimonial-card__mark{
 font-family:var(--font-display);
 font-size:clamp(80px,8vw,120px);
@@ -440,6 +460,10 @@ background:rgba(201,168,76,0.25);
 cursor:pointer;
 transition:background .3s,transform .3s;
 border:none;
+}
+.testimonios__dot:hover{
+background:rgba(201,168,76,0.5);
+transform:scale(1.2);
 }
 .testimonios__dot.active{background:var(--gold);transform:scale(1.3)}
 

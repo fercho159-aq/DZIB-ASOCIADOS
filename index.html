@@ -302,6 +302,12 @@ color:var(--text-muted);
 font-size:14px;
 line-height:1.7;
 }
+.area-card__icon svg{
+transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+}
+.area-card:hover .area-card__icon svg{
+transform:scale(1.1) rotate(-3deg);
+}
 
 /* ─── POR QUÉ ELEGIRNOS ─── */
 .stats{
@@ -350,7 +356,12 @@ border-radius:2px;
 overflow:hidden;
 transition:border-color .4s;
 }
-.equipo-card:hover{border-color:var(--border)}
+.equipo-card:hover{
+border-color:var(--border);
+box-shadow:0 8px 40px rgba(0,0,0,0.2);
+transform:translateY(-4px);
+}
+.equipo-card{transition:border-color .4s,box-shadow .4s,transform .3s;}
 .equipo-card__avatar{
 width:100%;aspect-ratio:1/1;
 background:var(--bg-secondary);
@@ -469,9 +480,15 @@ background:var(--gold);
 /* ─── TESTIMONIOS ─── */
 #testimonios{
 background-image:url('images/testimonios-bg.jpg');
-background-size:cover;
+background-size:500px;
 background-position:center;
-background-blend-mode:overlay;
+background-blend-mode:soft-light;
+position:relative;
+}
+#testimonios::before{
+content:'';position:absolute;inset:0;
+background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,0.03),transparent 70%);
+pointer-events:none;
 }
 .testimonios__carousel{
 position:relative;
@@ -526,6 +543,7 @@ cursor:pointer;
 transition:background .3s,transform .3s;
 border:none;
 }
+.testimonios__dot:hover{background:rgba(201,168,76,0.5);transform:scale(1.2)}
 .testimonios__dot.active{background:var(--gold);transform:scale(1.3)}
 
 /* ─── CONTACTO ─── */
@@ -539,8 +557,14 @@ inset:0;
 background-image:url('images/cdmx-reforma.jpg');
 background-size:cover;
 background-position:center;
-opacity:0.08;
+opacity:0.12;
 pointer-events:none;
+}
+#contacto .section__label,
+#contacto .section__title,
+#contacto .section__desc,
+#contacto .contacto__grid{
+position:relative;z-index:1;
 }
 .contacto__grid{
 display:grid;
