@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestro Equipo — Dzib & Asociados</title>
+<meta name="description" content="Conozca al equipo de abogados de Dzib & Asociados. Profesionales con formación de excelencia y experiencia comprobada en derecho corporativo, litigios y derecho penal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-primary:#0D0F14;
+--bg-secondary:#141720;
+--bg-card:#1A1D27;
+--gold:#C9A84C;
+--gold-light:#E2C06A;
+--text-primary:#F0EDE8;
+--text-muted:#8B8FA8;
+--border:rgba(201,168,76,0.2);
+--font-display:'Playfair Display',Georgia,serif;
+--font-body:'DM Sans','Helvetica Neue',sans-serif;
+--font-accent:'Cormorant Garamond','Times New Roman',serif;
+--nav-height:90px;
+--nav-height-scrolled:64px;
+}
+[data-theme="light"]{
+--bg-primary:#F5F3EF;
+--bg-secondary:#EBE8E2;
+--bg-card:#FFFFFF;
+--gold:#B8953F;
+--gold-light:#C9A84C;
+--text-primary:#1A1D27;
+--text-muted:#5A5D6B;
+--border:rgba(201,168,76,0.3);
+}
+html{scroll-behavior:smooth}
+body{
+font-family:var(--font-body);
+background:var(--bg-primary);
+color:var(--text-primary);
+overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-light)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+ul{list-style:none}
+
+/* ─── NAVBAR ─── */
+.navbar{
+position:fixed;top:0;left:0;width:100%;z-index:1000;
+height:var(--nav-height);
+display:flex;align-items:center;justify-content:space-between;
+padding:0 clamp(24px,5vw,80px);
+transition:background .4s,backdrop-filter .4s,height .4s;
+}
+.navbar.scrolled{
+height:var(--nav-height-scrolled);
+background:rgba(13,15,20,0.85);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+border-bottom:1px solid var(--border);
+}
+.navbar__logo{
+font-family:var(--font-display);
+font-size:clamp(14px,1.6vw,20px);
+font-weight:700;
+letter-spacing:2.5px;
+text-transform:uppercase;
+color:var(--gold);
+white-space:nowrap;
+}
+.navbar__links{display:flex;gap:clamp(16px,2.5vw,40px);align-items:center}
+.navbar__links a{
+font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+color:var(--text-muted);
+transition:color .3s;
+position:relative;
+}
+.navbar__links a::after{
+content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+background:var(--gold);transition:width .3s;
+}
+.navbar__links a:hover{color:var(--text-primary)}
+.navbar__links a:hover::after{width:100%}
+.navbar__links a.active{color:var(--gold)}
+.navbar__links a.active::after{width:100%}
+.navbar__toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.navbar__toggle span{display:block;width:24px;height:2px;background:var(--text-primary);transition:all .3s}
+.navbar__toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.navbar__toggle.active span:nth-child(2){opacity:0}
+.navbar__toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+.navbar__right{display:flex;align-items:center;gap:24px}
+.theme-toggle{
+display:flex;align-items:center;justify-content:center;
+width:40px;height:40px;
+border:1px solid rgba(255,255,255,0.1);
+border-radius:50%;
+color:var(--text-muted);
+transition:all .3s;
+cursor:pointer;
+background:none;
+}
+[data-theme="light"] .theme-toggle{border-color:rgba(0,0,0,0.1)}
+.theme-toggle:hover{color:var(--gold);border-color:var(--gold)}
+.theme-toggle__icon--moon{display:none}
+[data-theme="light"] .theme-toggle__icon--sun{display:none}
+[data-theme="light"] .theme-toggle__icon--moon{display:block}
+[data-theme="light"] .navbar.scrolled{background:rgba(245,243,239,0.9)}
+[data-theme="light"] .navbar__toggle span{background:var(--text-primary)}
+[data-theme="light"] ::-webkit-scrollbar-track{background:var(--bg-primary)}
+
+@media(max-width:768px){
+.navbar__toggle{display:flex}
+.navbar__links{
+position:fixed;top:0;right:-100%;width:280px;height:100vh;
+background:var(--bg-secondary);
+flex-direction:column;justify-content:center;gap:32px;
+padding:40px;
+transition:right .4s cubic-bezier(.77,0,.18,1);
+border-left:1px solid var(--border);
+}
+.navbar__links.open{right:0}
+.navbar__links a{font-size:16px;letter-spacing:2px}
+}
+
+/* ─── SECTION COMMON ─── */
+.section{padding:clamp(80px,10vw,140px) clamp(24px,5vw,80px)}
+.section__label{
+font-family:var(--font-accent);
+font-size:clamp(13px,1.1vw,16px);
+color:var(--gold);
+letter-spacing:4px;
+text-transform:uppercase;
+margin-bottom:16px;
+font-weight:400;
+}
+.section__title{
+font-family:var(--font-display);
+font-size:clamp(32px,4vw,56px);
+font-weight:700;
+line-height:1.15;
+margin-bottom:24px;
+}
+.section__desc{
+color:var(--text-muted);
+font-size:clamp(15px,1.1vw,18px);
+line-height:1.7;
+max-width:600px;
+}
+.section--alt{background:var(--bg-secondary)}
+
+/* ─── PAGE HERO ─── */
+.page-hero{
+position:relative;
+padding:calc(var(--nav-height) + 80px) clamp(24px,5vw,80px) clamp(60px,8vw,100px);
+background:var(--bg-secondary);
+background-image:url('images/oficina.jpg');
+background-size:cover;
+background-position:center;
+overflow:hidden;
+text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+.page-hero::before{
+content:'';position:absolute;inset:0;
+background:rgba(13,15,20,0.8);
+pointer-events:none;
+}
+.page-hero::after{
+content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;
+background:linear-gradient(90deg,transparent,var(--gold),transparent);
+opacity:0.3;
+}
+.page-hero__label{
+font-family:var(--font-accent);
+font-size:clamp(13px,1.1vw,16px);
+color:var(--gold);
+letter-spacing:4px;
+text-transform:uppercase;
+margin-bottom:20px;
+font-weight:400;
+position:relative;
+}
+.page-hero__title{
+font-family:var(--font-display);
+font-size:clamp(40px,5.5vw,72px);
+font-weight:700;
+line-height:1.1;
+margin-bottom:24px;
+position:relative;
+}
+.page-hero__subtitle{
+font-size:clamp(16px,1.3vw,20px);
+color:var(--text-muted);
+line-height:1.7;
+max-width:640px;
+position:relative;
+}
+
+/* ─── PHILOSOPHY ─── */
+.philosophy{
+text-align:center;
+max-width:900px;
+margin:0 auto;
+}
+.philosophy__text{
+font-family:var(--font-accent);
+font-size:clamp(22px,2.2vw,32px);
+font-style:italic;
+font-weight:400;
+line-height:1.6;
+color:var(--text-muted);
+}
+.philosophy__text strong{
+color:var(--gold);
+font-weight:500;
+}
+.philosophy__divider{
+width:60px;height:1px;
+background:var(--gold);
+margin:40px auto 0;
+opacity:0.5;
+}
+
+/* ─── ATTORNEY PROFILES ─── */
+.profile-card{
+display:grid;
+grid-template-columns:1fr;
+gap:0;
+background:var(--bg-card);
+border:1px solid rgba(255,255,255,0.04);
+border-radius:2px;
+overflow:hidden;
+margin-bottom:48px;
+transition:border-color .4s;
+}
+.profile-card:last-child{margin-bottom:0}
+.profile-card:hover{border-color:var(--border)}
+@media(min-width:900px){
+.profile-card{
+grid-template-columns:380px 1fr;
+min-height:480px;
+}
+.profile-card--reverse{
+grid-template-columns:1fr 380px;
+}
+.profile-card--reverse .profile-card__avatar{
+order:2;
+}
+.profile-card--reverse .profile-card__body{
+order:1;
+}
+}
+
+.profile-card__avatar{
+background:var(--bg-secondary);
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+overflow:hidden;
+min-height:320px;
+}
+.profile-card__avatar::before{
+content:'';position:absolute;inset:0;
+background:linear-gradient(135deg,rgba(201,168,76,0.1),transparent 60%);
+}
+.profile-card__initials{
+font-family:var(--font-display);
+font-size:clamp(80px,8vw,120px);
+font-weight:300;
+color:rgba(201,168,76,0.25);
+letter-spacing:6px;
+position:relative;
+}
+[data-theme="light"] .profile-card__initials{color:rgba(201,168,76,0.4)}
+[data-theme="light"] .profile-card{border-color:rgba(0,0,0,0.06)}
+
+.profile-card__body{
+padding:clamp(32px,4vw,56px);
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+.profile-card__name{
+font-family:var(--font-display);
+font-size:clamp(24px,2vw,32px);
+font-weight:700;
+margin-bottom:6px;
+}
+.profile-card__title{
+font-family:var(--font-accent);
+font-size:clamp(16px,1.2vw,19px);
+color:var(--gold);
+font-style:italic;
+margin-bottom:24px;
+}
+.profile-card__bio{
+font-size:clamp(14px,1vw,16px);
+color:var(--text-muted);
+line-height:1.8;
+margin-bottom:28px;
+}
+
+.profile-card__section-label{
+font-size:11px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:12px;
+font-weight:600;
+}
+
+.profile-card__specialties{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-bottom:24px;
+}
+.specialty-tag{
+display:inline-block;
+padding:6px 16px;
+font-size:12px;
+font-weight:500;
+letter-spacing:1px;
+text-transform:uppercase;
+border:1px solid var(--border);
+color:var(--text-muted);
+transition:all .3s;
+border-radius:2px;
+}
+.specialty-tag:hover{
+border-color:var(--gold);
+color:var(--gold);
+}
+
+.profile-card__education{
+display:flex;
+align-items:center;
+gap:8px;
+flex-wrap:wrap;
+}
+.education-item{
+font-size:13px;
+color:var(--text-muted);
+display:flex;
+align-items:center;
+gap:6px;
+}
+.education-item svg{
+width:14px;height:14px;
+color:var(--gold);
+flex-shrink:0;
+}
+.education-item + .education-item::before{
+content:'';
+display:inline-block;
+width:4px;height:4px;
+background:var(--border);
+border-radius:50%;
+margin-right:2px;
+}
+
+/* ─── VALUES ─── */
+.values__grid{
+display:grid;
+grid-template-columns:1fr;
+gap:32px;
+margin-top:56px;
+}
+@media(min-width:768px){.values__grid{grid-template-columns:repeat(3,1fr)}}
+.value-card{
+text-align:center;
+padding:48px 32px;
+background:var(--bg-card);
+border:1px solid rgba(255,255,255,0.04);
+border-radius:2px;
+transition:border-color .4s,transform .3s;
+}
+.value-card:hover{
+border-color:var(--gold);
+transform:translateY(-4px);
+}
+[data-theme="light"] .value-card{border-color:rgba(0,0,0,0.06)}
+.value-card__icon{
+width:56px;height:56px;
+margin:0 auto 24px;
+color:var(--gold);
+}
+.value-card__icon svg{width:100%;height:100%}
+.value-card__title{
+font-family:var(--font-display);
+font-size:clamp(20px,1.5vw,24px);
+font-weight:600;
+margin-bottom:12px;
+}
+.value-card__desc{
+font-size:14px;
+color:var(--text-muted);
+line-height:1.7;
+}
+
+/* ─── CTA BANNER ─── */
+.cta-banner{
+text-align:center;
+background:var(--bg-secondary);
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
+}
+.cta-banner__title{
+font-family:var(--font-display);
+font-size:clamp(24px,3vw,40px);
+font-weight:700;
+margin-bottom:16px;
+}
+.cta-banner__text{
+color:var(--text-muted);
+font-size:clamp(15px,1.1vw,18px);
+line-height:1.7;
+max-width:560px;
+margin:0 auto 32px;
+}
+.btn{
+display:inline-flex;align-items:center;gap:8px;
+padding:16px 36px;
+font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+transition:all .35s cubic-bezier(.25,.46,.45,.94);
+}
+.btn--primary{
+border:1px solid var(--gold);
+color:var(--gold);
+background:transparent;
+}
+.btn--primary:hover{
+background:var(--gold);
+color:var(--bg-primary);
+}
+
+/* ─── FOOTER ─── */
+.footer{
+background:var(--bg-secondary);
+border-top:1px solid rgba(255,255,255,0.04);
+padding:60px clamp(24px,5vw,80px) 32px;
+}
+.footer__top{
+display:flex;
+flex-direction:column;
+gap:40px;
+margin-bottom:48px;
+}
+@media(min-width:768px){
+.footer__top{
+flex-direction:row;
+justify-content:space-between;
+align-items:flex-start;
+}
+}
+.footer__brand{max-width:360px}
+.footer__logo{
+font-family:var(--font-display);
+font-size:18px;font-weight:700;
+letter-spacing:2.5px;text-transform:uppercase;
+color:var(--gold);
+margin-bottom:16px;
+}
+.footer__tagline{
+font-family:var(--font-accent);
+font-size:16px;
+color:var(--text-muted);
+font-style:italic;
+line-height:1.6;
+}
+.footer__nav{display:flex;gap:clamp(16px,3vw,40px);flex-wrap:wrap}
+.footer__nav a{
+font-size:13px;letter-spacing:1.5px;text-transform:uppercase;
+color:var(--text-muted);
+transition:color .3s;
+}
+.footer__nav a:hover{color:var(--gold)}
+.footer__social{display:flex;gap:16px}
+.footer__social a{
+width:40px;height:40px;
+border:1px solid rgba(255,255,255,0.08);
+display:flex;align-items:center;justify-content:center;
+color:var(--text-muted);
+transition:all .3s;
+border-radius:2px;
+}
+.footer__social a:hover{border-color:var(--gold);color:var(--gold)}
+.footer__social svg{width:18px;height:18px}
+.footer__bottom{
+padding-top:32px;
+border-top:1px solid rgba(255,255,255,0.04);
+text-align:center;
+font-size:13px;
+color:var(--text-muted);
+letter-spacing:.5px;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<a href="index.html" class="navbar__logo" aria-label="Dzib & Asociados — Inicio">DZIB & ASOCIADOS</a>
+<div class="navbar__right">
+<div class="navbar__links" role="menubar">
+<a href="index.html" role="menuitem">Inicio</a>
+<a href="practica.html" role="menuitem">Práctica</a>
+<a href="equipo.html" role="menuitem" class="active">Equipo</a>
+<a href="casos.html" role="menuitem">Casos</a>
+<a href="contacto.html" role="menuitem">Contacto</a>
+</div>
+<button class="theme-toggle" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
+<svg class="theme-toggle__icon--sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+<svg class="theme-toggle__icon--moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+<button class="navbar__toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero" aria-label="Encabezado de página">
+<p class="page-hero__label reveal">Dzib & Asociados</p>
+<h1 class="page-hero__title reveal">Nuestro Equipo</h1>
+<p class="page-hero__subtitle reveal">Profesionales con la formación, experiencia y compromiso que su caso merece.</p>
+</section>
+
+<!-- ═══ PHILOSOPHY ═══ -->
+<section class="section" aria-label="Filosofía del despacho">
+<div class="philosophy reveal">
+<p class="philosophy__text">En Dzib & Asociados creemos que la <strong>excelencia académica</strong> solo cobra sentido cuando se traduce en <strong>resultados tangibles</strong> para nuestros clientes. Cada integrante de nuestro equipo combina una sólida formación en las mejores instituciones del país con décadas de experiencia práctica en tribunales, salas de negociación y mesas directivas.</p>
+<div class="philosophy__divider"></div>
+<img src="images/divider.png" alt="" aria-hidden="true" style="width:200px;margin:24px auto 0;opacity:0.5;display:block;">
+</div>
+</section>
+
+<!-- ═══ ATTORNEY PROFILES ═══ -->
+<section class="section section--alt" aria-label="Perfiles de abogados">
+<p class="section__label reveal">Conozca a nuestros abogados</p>
+<h2 class="section__title reveal">Perfiles Profesionales</h2>
+<p class="section__desc reveal" style="margin-bottom:56px;">Cada miembro de nuestro equipo aporta una perspectiva única, respaldada por formación de primer nivel y trayectoria comprobada.</p>
+
+<!-- Profile 1: Juan Pablo Dzib -->
+<div class="profile-card reveal">
+<div class="profile-card__avatar">
+<span class="profile-card__initials">JD</span>
+</div>
+<div class="profile-card__body">
+<h3 class="profile-card__name">Lic. Juan Pablo Dzib</h3>
+<p class="profile-card__title">Socio Fundador — Derecho Corporativo</p>
+<p class="profile-card__bio">Egresado con mención honorífica de la Facultad de Derecho de la UNAM y con maestría en Derecho Empresarial por el ITAM, el Lic. Dzib cuenta con más de 25 años de experiencia en el ámbito del derecho corporativo en México. Reconocido como uno de los principales especialistas en fusiones y adquisiciones del país, ha liderado operaciones transfronterizas de alto perfil que superan los mil millones de dólares en valor acumulado. A lo largo de su carrera, ha asesorado a empresas del Fortune 500 en sus operaciones en territorio mexicano, diseñando estructuras societarias y estrategias de cumplimiento regulatorio que garantizan seguridad jurídica en cada transacción. Su visión estratégica y rigor profesional son el pilar fundacional del despacho.</p>
+<p class="profile-card__section-label">Especialidades</p>
+<div class="profile-card__specialties">
+<span class="specialty-tag">Fusiones y adquisiciones</span>
+<span class="specialty-tag">Gobierno corporativo</span>
+<span class="specialty-tag">Contratos mercantiles</span>
+<span class="specialty-tag">Cumplimiento regulatorio</span>
+</div>
+<p class="profile-card__section-label">Formación académica</p>
+<div class="profile-card__education">
+<span class="education-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>UNAM — Licenciatura en Derecho</span>
+<span class="education-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>ITAM — Maestría en Derecho Empresarial</span>
+</div>
+</div>
+</div>
+
+<!-- Profile 2: Valeria Soto -->
+<div class="profile-card profile-card--reverse reveal">
+<div class="profile-card__avatar">
+<span class="profile-card__initials">VS</span>
+</div>
+<div class="profile-card__body">
+<h3 class="profile-card__name">Dra. Valeria Soto</h3>
+<p class="profile-card__title">Socia — Litigios y Amparo</p>
+<p class="profile-card__bio">La Dra. Soto obtuvo el grado de Doctora en Derecho Constitucional por la Universidad Panamericana, donde su tesis doctoral sobre el control de convencionalidad recibió la distinción Summa Cum Laude. Es especialista en juicios de amparo y protección de derechos humanos, con más de 15 años de práctica litigiosa ante tribunales federales y organismos internacionales. Ha publicado más de 30 artículos en revistas jurídicas internacionales de prestigio y es frecuentemente citada como referente en temas de derecho constitucional mexicano. Antes de incorporarse al despacho, fungió como asesora legislativa en el Senado de la República, donde participó en la redacción de iniciativas de ley en materia de derechos fundamentales.</p>
+<p class="profile-card__section-label">Especialidades</p>
+<div class="profile-card__specialties">
+<span class="specialty-tag">Juicios de amparo</span>
+<span class="specialty-tag">Controversias constitucionales</span>
+<span class="specialty-tag">Derechos humanos</span>
+<span class="specialty-tag">Litigios civiles</span>
+</div>
+<p class="profile-card__section-label">Formación académica</p>
+<div class="profile-card__education">
+<span class="education-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Universidad Panamericana — Doctorado en Derecho Constitucional</span>
+</div>
+</div>
+</div>
+
+<!-- Profile 3: Andrés Fuentes -->
+<div class="profile-card reveal">
+<div class="profile-card__avatar">
+<span class="profile-card__initials">AF</span>
+</div>
+<div class="profile-card__body">
+<h3 class="profile-card__name">Lic. Andrés Fuentes</h3>
+<p class="profile-card__title">Asociado Senior — Derecho Penal</p>
+<p class="profile-card__bio">Egresado del ITAM con especialidad en Ciencias Penales por el Instituto Nacional de Ciencias Penales (INACIPE), el Lic. Fuentes se ha consolidado como uno de los penalistas más efectivos de su generación. Con más de 120 sentencias absolutorias en su haber, domina a la perfección el sistema de justicia penal acusatorio y los juicios orales. Es reconocido en el foro por su preparación meticulosa de cada caso, su capacidad para desmontar hipótesis acusatorias complejas y su habilidad para presentar argumentos contundentes en audiencia. Su experiencia abarca desde delitos fiscales de alto impacto hasta amparos penales de naturaleza constitucional.</p>
+<p class="profile-card__section-label">Especialidades</p>
+<div class="profile-card__specialties">
+<span class="specialty-tag">Sistema acusatorio</span>
+<span class="specialty-tag">Delitos fiscales</span>
+<span class="specialty-tag">Amparos penales</span>
+<span class="specialty-tag">Juicios orales</span>
+</div>
+<p class="profile-card__section-label">Formación académica</p>
+<div class="profile-card__education">
+<span class="education-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>ITAM — Licenciatura en Derecho</span>
+<span class="education-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>INACIPE — Especialidad en Ciencias Penales</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ VALUES ═══ -->
+<section class="section" aria-label="Valores del despacho">
+<div style="text-align:center;">
+<p class="section__label reveal">Lo que nos define</p>
+<h2 class="section__title reveal" style="margin-left:auto;margin-right:auto;">Nuestros Valores</h2>
+</div>
+<div class="values__grid">
+
+<div class="value-card reveal">
+<div class="value-card__icon">
+<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M28 6l6 12 14 2-10 10 2 14-12-6-12 6 2-14L8 20l14-2z"/>
+</svg>
+</div>
+<h3 class="value-card__title">Excelencia Académica</h3>
+<p class="value-card__desc">Nuestros abogados provienen de las instituciones más prestigiosas del país y mantienen una formación continua que les permite estar a la vanguardia del derecho mexicano e internacional.</p>
+</div>
+
+<div class="value-card reveal">
+<div class="value-card__icon">
+<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M28 8v40M14 20c0-8 28-8 28 0M14 36c0 8 28 8 28 0"/>
+<circle cx="28" cy="28" r="20"/>
+</svg>
+</div>
+<h3 class="value-card__title">Compromiso Total</h3>
+<p class="value-card__desc">Cada caso recibe nuestra dedicación absoluta. Entendemos que detrás de cada expediente hay personas, familias y empresas que confían en nuestra capacidad para proteger sus intereses.</p>
+</div>
+
+<div class="value-card reveal">
+<div class="value-card__icon">
+<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M8 40l12-16 8 8 12-20"/>
+<path d="M36 12h8v8"/>
+<rect x="6" y="6" width="44" height="44" rx="4"/>
+</svg>
+</div>
+<h3 class="value-card__title">Resultados Comprobables</h3>
+<p class="value-card__desc">Nuestra trayectoria habla por sí misma: cientos de casos resueltos favorablemente, sentencias absolutorias y negociaciones exitosas que avalan la calidad de nuestro trabajo.</p>
+</div>
+
+</div>
+</section>
+
+<!-- ═══ CTA BANNER ═══ -->
+<section class="section cta-banner" aria-label="Llamada a la acción">
+<h2 class="cta-banner__title reveal">¿Listo para trabajar con nosotros?</h2>
+<p class="cta-banner__text reveal">Agende una consulta inicial sin compromiso y permítanos conocer su caso.</p>
+<a href="contacto.html" class="btn btn--primary reveal">Contactar al Equipo</a>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer" role="contentinfo">
+<div class="footer__top">
+<div class="footer__brand">
+<div class="footer__logo">DZIB & ASOCIADOS</div>
+<p class="footer__tagline">Excelencia jurídica al servicio de quienes exigen los mejores resultados. Desde 2004 en la Ciudad de México.</p>
+</div>
+<nav class="footer__nav" aria-label="Enlaces del pie de página">
+<a href="index.html">Inicio</a>
+<a href="practica.html">Práctica</a>
+<a href="equipo.html">Equipo</a>
+<a href="casos.html">Casos</a>
+<a href="contacto.html">Contacto</a>
+</nav>
+<div class="footer__social">
+<a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+<a href="#" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+<a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+</div>
+</div>
+<div class="footer__bottom">
+<p>&copy; 2026 Dzib & Asociados. Todos los derechos reservados.</p>
+</div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   GSAP & ScrollTrigger Setup
+   ═══════════════════════════════════════════ */
+gsap.registerPlugin(ScrollTrigger);
+
+/* ─── Theme Toggle ─── */
+const themeToggle = document.querySelector('.theme-toggle');
+const savedTheme = localStorage.getItem('dzib-theme');
+if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('dzib-theme', next);
+});
+
+/* ─── Mobile Nav Toggle ─── */
+const navToggle = document.querySelector('.navbar__toggle');
+const navLinks = document.querySelector('.navbar__links');
+navToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('active');
+  navToggle.setAttribute('aria-expanded', isOpen);
+});
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('active');
+    navToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+/* ─── Navbar Scroll Behavior ─── */
+const navbar = document.querySelector('.navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+/* ─── Set initial states ─── */
+gsap.set('.reveal', { opacity: 0, y: 40 });
+
+/* ─── General Reveal Animations ─── */
+document.querySelectorAll('.reveal').forEach(el => {
+  const direction = el.dataset.direction;
+  const fromX = direction === 'left' ? -60 : direction === 'right' ? 60 : 0;
+  const fromY = direction ? 0 : 40;
+
+  gsap.set(el, { opacity: 0, y: fromY, x: fromX });
+
+  gsap.to(el, {
+    opacity: 1,
+    y: 0,
+    x: 0,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+/* ─── Profile Cards Stagger ─── */
+gsap.set('.profile-card', { opacity: 0, y: 50 });
+document.querySelectorAll('.profile-card').forEach(card => {
+  gsap.to(card, {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: card,
+      start: 'top 82%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+/* ─── Value Cards Stagger ─── */
+gsap.set('.value-card', { opacity: 0, y: 50 });
+ScrollTrigger.create({
+  trigger: '.values__grid',
+  start: 'top 80%',
+  once: true,
+  onEnter: () => {
+    gsap.to('.value-card', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out'
+    });
+  }
+});
+
+/* ─── Specialty Tags Hover Shimmer ─── */
+document.querySelectorAll('.specialty-tag').forEach(tag => {
+  tag.addEventListener('mouseenter', () => {
+    gsap.fromTo(tag, { scale: 1 }, { scale: 1.05, duration: 0.2, ease: 'power2.out' });
+  });
+  tag.addEventListener('mouseleave', () => {
+    gsap.to(tag, { scale: 1, duration: 0.2, ease: 'power2.out' });
+  });
+});
+</script>
+</body>
+</html>

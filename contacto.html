@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto — Dzib & Asociados</title>
+<meta name="description" content="Contáctenos para una consulta inicial gratuita. Dzib & Asociados, despacho jurídico en Ciudad de México.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-primary:#0D0F14;
+--bg-secondary:#141720;
+--bg-card:#1A1D27;
+--gold:#C9A84C;
+--gold-light:#E2C06A;
+--text-primary:#F0EDE8;
+--text-muted:#8B8FA8;
+--border:rgba(201,168,76,0.2);
+--font-display:'Playfair Display',Georgia,serif;
+--font-body:'DM Sans','Helvetica Neue',sans-serif;
+--font-accent:'Cormorant Garamond','Times New Roman',serif;
+--nav-height:90px;
+--nav-height-scrolled:64px;
+}
+[data-theme="light"]{
+--bg-primary:#F5F3EF;
+--bg-secondary:#EBE8E2;
+--bg-card:#FFFFFF;
+--gold:#B8953F;
+--gold-light:#C9A84C;
+--text-primary:#1A1D27;
+--text-muted:#5A5D6B;
+--border:rgba(201,168,76,0.3);
+}
+html{scroll-behavior:smooth}
+body{
+font-family:var(--font-body);
+background:var(--bg-primary);
+color:var(--text-primary);
+overflow-x:hidden;
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-light)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+ul{list-style:none}
+
+/* ─── NAVBAR ─── */
+.navbar{
+position:fixed;top:0;left:0;width:100%;z-index:1000;
+height:var(--nav-height);
+display:flex;align-items:center;justify-content:space-between;
+padding:0 clamp(24px,5vw,80px);
+transition:background .4s,backdrop-filter .4s,height .4s;
+}
+.navbar.scrolled{
+height:var(--nav-height-scrolled);
+background:rgba(13,15,20,0.85);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+border-bottom:1px solid var(--border);
+}
+.navbar__logo{
+font-family:var(--font-display);
+font-size:clamp(14px,1.6vw,20px);
+font-weight:700;
+letter-spacing:2.5px;
+text-transform:uppercase;
+color:var(--gold);
+white-space:nowrap;
+}
+.navbar__links{display:flex;gap:clamp(16px,2.5vw,40px);align-items:center}
+.navbar__links a{
+font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+color:var(--text-muted);
+transition:color .3s;
+position:relative;
+}
+.navbar__links a::after{
+content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+background:var(--gold);transition:width .3s;
+}
+.navbar__links a:hover{color:var(--text-primary)}
+.navbar__links a:hover::after{width:100%}
+.navbar__links a.active{color:var(--gold)}
+.navbar__links a.active::after{width:100%}
+.navbar__toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.navbar__toggle span{display:block;width:24px;height:2px;background:var(--text-primary);transition:all .3s}
+.navbar__toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.navbar__toggle.active span:nth-child(2){opacity:0}
+.navbar__toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+.navbar__right{display:flex;align-items:center;gap:24px}
+.theme-toggle{
+display:flex;align-items:center;justify-content:center;
+width:40px;height:40px;
+border:1px solid rgba(255,255,255,0.1);
+border-radius:50%;
+color:var(--text-muted);
+transition:all .3s;
+cursor:pointer;
+background:none;
+}
+[data-theme="light"] .theme-toggle{border-color:rgba(0,0,0,0.1)}
+.theme-toggle:hover{color:var(--gold);border-color:var(--gold)}
+.theme-toggle__icon--moon{display:none}
+[data-theme="light"] .theme-toggle__icon--sun{display:none}
+[data-theme="light"] .theme-toggle__icon--moon{display:block}
+[data-theme="light"] .navbar.scrolled{background:rgba(245,243,239,0.9)}
+[data-theme="light"] .navbar__toggle span{background:var(--text-primary)}
+[data-theme="light"] ::-webkit-scrollbar-track{background:var(--bg-primary)}
+
+@media(max-width:768px){
+.navbar__toggle{display:flex}
+.navbar__links{
+position:fixed;top:0;right:-100%;width:280px;height:100vh;
+background:var(--bg-secondary);
+flex-direction:column;justify-content:center;gap:32px;
+padding:40px;
+transition:right .4s cubic-bezier(.77,0,.18,1);
+border-left:1px solid var(--border);
+}
+.navbar__links.open{right:0}
+.navbar__links a{font-size:16px;letter-spacing:2px}
+}
+
+/* ─── HERO BANNER ─── */
+.page-hero{
+padding:clamp(140px,18vw,200px) clamp(24px,5vw,80px) clamp(60px,8vw,100px);
+text-align:center;
+background:var(--bg-secondary);
+position:relative;
+overflow:hidden;
+background-image:url('images/cdmx-reforma.jpg');
+background-size:cover;
+background-position:center;
+}
+.page-hero::after{
+content:'';position:absolute;inset:0;
+background:linear-gradient(to bottom, rgba(13,15,20,0.75), rgba(13,15,20,0.9));
+pointer-events:none;
+}
+.page-hero__title{
+font-family:var(--font-display);
+font-size:clamp(40px,6vw,72px);
+font-weight:700;
+line-height:1.1;
+margin-bottom:24px;
+position:relative;z-index:1;
+}
+.page-hero__subtitle{
+font-family:var(--font-accent);
+font-size:clamp(16px,1.4vw,20px);
+color:var(--text-muted);
+line-height:1.7;
+max-width:640px;
+margin:0 auto;
+font-style:italic;
+position:relative;z-index:1;
+}
+.page-hero__line{
+width:60px;height:2px;
+background:var(--gold);
+margin:32px auto 0;
+position:relative;z-index:1;
+}
+
+/* ─── SECTION COMMON ─── */
+.section{padding:clamp(80px,10vw,140px) clamp(24px,5vw,80px)}
+.section--alt{background:var(--bg-secondary)}
+
+/* ─── CONTACT LAYOUT ─── */
+.contact-grid{
+display:grid;
+grid-template-columns:1fr;
+gap:clamp(48px,5vw,80px);
+max-width:1200px;
+margin:0 auto;
+}
+@media(min-width:900px){
+.contact-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ─── CONTACT INFO ─── */
+.contact-info__heading{
+font-family:var(--font-display);
+font-size:clamp(24px,2.5vw,36px);
+font-weight:700;
+margin-bottom:40px;
+line-height:1.2;
+}
+.contact-info__item{
+display:flex;
+gap:20px;
+align-items:flex-start;
+margin-bottom:32px;
+}
+.contact-info__icon{
+flex-shrink:0;
+width:48px;height:48px;
+display:flex;align-items:center;justify-content:center;
+border:1px solid var(--border);
+border-radius:2px;
+color:var(--gold);
+}
+.contact-info__icon svg{width:22px;height:22px}
+.contact-info__label{
+font-size:12px;
+font-weight:600;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:6px;
+}
+.contact-info__text{
+font-size:15px;
+color:var(--text-muted);
+line-height:1.6;
+}
+.contact-info__text a{
+color:var(--text-muted);
+transition:color .3s;
+}
+.contact-info__text a:hover{color:var(--gold)}
+
+/* ─── MAP PLACEHOLDER ─── */
+.map-placeholder{
+width:100%;
+height:400px;
+background:var(--bg-card);
+border:1px solid var(--border);
+border-radius:2px;
+margin-top:16px;
+position:relative;
+overflow:hidden;
+}
+.map-placeholder__text{
+font-family:var(--font-accent);
+font-size:16px;
+color:var(--text-muted);
+font-style:italic;
+letter-spacing:1px;
+text-align:center;
+padding:24px;
+position:relative;z-index:1;
+}
+.map-placeholder__icon{
+color:var(--gold);
+margin-bottom:16px;
+opacity:.5;
+}
+.map-placeholder__icon svg{width:48px;height:48px}
+
+/* ─── CONTACT FORM ─── */
+.contact-form{
+display:flex;
+flex-direction:column;
+gap:24px;
+}
+.form-group{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+.form-group label{
+font-size:12px;
+font-weight:600;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--text-muted);
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+width:100%;
+padding:14px 16px;
+font-family:var(--font-body);
+font-size:15px;
+color:var(--text-primary);
+background:var(--bg-card);
+border:none;
+border-bottom:2px solid var(--border);
+border-radius:2px;
+outline:none;
+transition:border-color .3s,box-shadow .3s;
+-webkit-appearance:none;
+appearance:none;
+}
+.form-group select{
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238B8FA8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+background-repeat:no-repeat;
+background-position:right 16px center;
+padding-right:40px;
+cursor:pointer;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+border-bottom-color:var(--gold);
+box-shadow:0 2px 0 0 var(--gold);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+color:var(--text-muted);
+opacity:.6;
+}
+.form-group textarea{
+min-height:140px;
+resize:vertical;
+}
+.form-group select option{
+background:var(--bg-card);
+color:var(--text-primary);
+}
+.btn-submit{
+display:inline-flex;align-items:center;justify-content:center;gap:8px;
+padding:18px 40px;
+font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+border:1px solid var(--gold);
+color:var(--gold);
+background:transparent;
+cursor:pointer;
+transition:all .35s cubic-bezier(.25,.46,.45,.94);
+align-self:flex-start;
+font-family:var(--font-body);
+}
+.btn-submit:hover{
+background:var(--gold);
+color:var(--bg-primary);
+}
+.btn-submit svg{
+width:18px;height:18px;
+transition:transform .3s;
+}
+.btn-submit:hover svg{transform:translateX(4px)}
+
+/* ─── FEATURES ─── */
+.features-grid{
+display:grid;
+grid-template-columns:1fr;
+gap:32px;
+max-width:1200px;
+margin:0 auto;
+}
+@media(min-width:768px){.features-grid{grid-template-columns:repeat(3,1fr)}}
+.feature-card{
+background:var(--bg-card);
+border:1px solid transparent;
+border-radius:2px;
+padding:40px 32px;
+text-align:center;
+transition:border-color .4s,transform .3s,box-shadow .4s;
+}
+.feature-card:hover{
+border-color:var(--gold);
+transform:translateY(-4px);
+box-shadow:0 0 40px rgba(201,168,76,0.08);
+}
+.feature-card__icon{
+width:56px;height:56px;
+margin:0 auto 24px;
+color:var(--gold);
+display:flex;align-items:center;justify-content:center;
+}
+.feature-card__icon svg{width:100%;height:100%}
+.feature-card__title{
+font-family:var(--font-display);
+font-size:clamp(18px,1.4vw,22px);
+font-weight:600;
+margin-bottom:12px;
+}
+.feature-card__desc{
+color:var(--text-muted);
+font-size:14px;
+line-height:1.7;
+}
+
+/* ─── FOOTER ─── */
+.footer{
+background:var(--bg-secondary);
+border-top:1px solid rgba(255,255,255,0.04);
+padding:60px clamp(24px,5vw,80px) 32px;
+}
+.footer__top{
+display:flex;
+flex-direction:column;
+gap:40px;
+margin-bottom:48px;
+}
+@media(min-width:768px){
+.footer__top{
+flex-direction:row;
+justify-content:space-between;
+align-items:flex-start;
+}
+}
+.footer__brand{max-width:360px}
+.footer__logo{
+font-family:var(--font-display);
+font-size:18px;font-weight:700;
+letter-spacing:2.5px;text-transform:uppercase;
+color:var(--gold);
+margin-bottom:16px;
+}
+.footer__tagline{
+font-family:var(--font-accent);
+font-size:16px;
+color:var(--text-muted);
+font-style:italic;
+line-height:1.6;
+}
+.footer__nav{display:flex;gap:clamp(16px,3vw,40px);flex-wrap:wrap}
+.footer__nav a{
+font-size:13px;letter-spacing:1.5px;text-transform:uppercase;
+color:var(--text-muted);
+transition:color .3s;
+}
+.footer__nav a:hover{color:var(--gold)}
+.footer__social{display:flex;gap:16px}
+.footer__social a{
+width:40px;height:40px;
+border:1px solid rgba(255,255,255,0.08);
+display:flex;align-items:center;justify-content:center;
+color:var(--text-muted);
+transition:all .3s;
+border-radius:2px;
+}
+.footer__social a:hover{border-color:var(--gold);color:var(--gold)}
+.footer__social svg{width:18px;height:18px}
+.footer__bottom{
+padding-top:32px;
+border-top:1px solid rgba(255,255,255,0.04);
+text-align:center;
+font-size:13px;
+color:var(--text-muted);
+letter-spacing:.5px;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<a href="index.html" class="navbar__logo" aria-label="Dzib & Asociados — Inicio">DZIB & ASOCIADOS</a>
+<div class="navbar__right">
+<div class="navbar__links" role="menubar">
+<a href="index.html" role="menuitem">Inicio</a>
+<a href="practica.html" role="menuitem">Práctica</a>
+<a href="equipo.html" role="menuitem">Equipo</a>
+<a href="casos.html" role="menuitem">Casos</a>
+<a href="contacto.html" role="menuitem" class="active">Contacto</a>
+</div>
+<button class="theme-toggle" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
+<svg class="theme-toggle__icon--sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+<svg class="theme-toggle__icon--moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+<button class="navbar__toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<!-- ═══ HERO BANNER ═══ -->
+<section class="page-hero" aria-label="Encabezado de contacto">
+<h1 class="page-hero__title reveal">Contacto</h1>
+<p class="page-hero__subtitle reveal">La primera consulta es sin costo. Platíquenos su caso y le indicaremos el mejor camino.</p>
+<div class="page-hero__line reveal"></div>
+</section>
+
+<!-- ═══ CONTACT SECTION ═══ -->
+<section class="section" aria-label="Información de contacto y formulario">
+<div class="contact-grid">
+
+<!-- LEFT COLUMN — Info -->
+<div class="contact-info">
+<h2 class="contact-info__heading reveal">Información del Despacho</h2>
+
+<div class="contact-info__item reveal">
+<div class="contact-info__icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+</div>
+<div>
+<p class="contact-info__label">Dirección</p>
+<p class="contact-info__text">Paseo de la Reforma 505, Piso 32,<br>Col. Cuauhtémoc, 06500,<br>Ciudad de México, CDMX</p>
+</div>
+</div>
+
+<div class="contact-info__item reveal">
+<div class="contact-info__icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+</div>
+<div>
+<p class="contact-info__label">Teléfono</p>
+<p class="contact-info__text"><a href="tel:+525555402800">+52 (55) 5540-2800</a></p>
+</div>
+</div>
+
+<div class="contact-info__item reveal">
+<div class="contact-info__icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+</div>
+<div>
+<p class="contact-info__label">Correo Electrónico</p>
+<p class="contact-info__text"><a href="mailto:contacto@dzib-asociados.mx">contacto@dzib-asociados.mx</a></p>
+</div>
+</div>
+
+<div class="contact-info__item reveal">
+<div class="contact-info__icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+</div>
+<div>
+<p class="contact-info__label">Horario de Atención</p>
+<p class="contact-info__text">Lunes a Viernes: 9:00 – 19:00 hrs<br>Sábado: 10:00 – 14:00 hrs (previa cita)</p>
+</div>
+</div>
+
+<!-- Map Placeholder -->
+<div class="map-placeholder reveal">
+<img src="images/recepcion.jpg" alt="Recepción del despacho Dzib & Asociados" style="width:100%;height:100%;object-fit:cover;">
+</div>
+</div>
+
+<!-- RIGHT COLUMN — Form -->
+<div>
+<form class="contact-form" onsubmit="event.preventDefault()" aria-label="Formulario de contacto">
+
+<div class="form-group reveal">
+<label for="nombre">Nombre completo</label>
+<input type="text" id="nombre" name="nombre" placeholder="Ej. María González Pérez" required>
+</div>
+
+<div class="form-group reveal">
+<label for="email">Correo electrónico</label>
+<input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+</div>
+
+<div class="form-group reveal">
+<label for="telefono">Teléfono</label>
+<input type="tel" id="telefono" name="telefono" placeholder="+52 (55) 0000-0000">
+</div>
+
+<div class="form-group reveal">
+<label for="asunto">Asunto</label>
+<select id="asunto" name="asunto" required>
+<option value="" disabled selected>Seleccione un área de práctica</option>
+<option value="corporativo">Derecho Corporativo</option>
+<option value="civil">Litigios Civiles</option>
+<option value="penal">Derecho Penal</option>
+<option value="familiar">Derecho Familiar</option>
+<option value="amparo">Amparo y Constitucional</option>
+<option value="laboral">Derecho Laboral</option>
+<option value="otro">Otro</option>
+</select>
+</div>
+
+<div class="form-group reveal">
+<label for="mensaje">Mensaje</label>
+<textarea id="mensaje" name="mensaje" placeholder="Describa brevemente su caso o consulta..." required></textarea>
+</div>
+
+<div class="reveal">
+<button type="submit" class="btn-submit">
+Enviar Consulta
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+</button>
+</div>
+
+</form>
+</div>
+
+</div>
+</section>
+
+<!-- ═══ FEATURES SECTION ═══ -->
+<section class="section section--alt" aria-label="Ventajas de contactarnos">
+<div class="features-grid">
+
+<div class="feature-card reveal">
+<div class="feature-card__icon">
+<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="28" r="20"/><path d="M20 28l5 5 11-11"/></svg>
+</div>
+<h3 class="feature-card__title">Consulta Inicial Gratuita</h3>
+<p class="feature-card__desc">Evaluamos su caso sin compromiso ni costo alguno. Nuestros abogados analizan su situación y le ofrecen una perspectiva clara de las opciones legales disponibles.</p>
+</div>
+
+<div class="feature-card reveal">
+<div class="feature-card__icon">
+<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="16" width="32" height="24" rx="2"/><path d="M12 24h32"/><circle cx="28" cy="32" r="4"/><path d="M20 16v-4h16v4"/></svg>
+</div>
+<h3 class="feature-card__title">Absoluta Confidencialidad</h3>
+<p class="feature-card__desc">Toda la información que nos comparta está protegida por el secreto profesional. Manejamos cada caso con la máxima discreción y ética profesional.</p>
+</div>
+
+<div class="feature-card reveal">
+<div class="feature-card__icon">
+<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="28" r="20"/><polyline points="28 18 28 28 36 32"/></svg>
+</div>
+<h3 class="feature-card__title">Respuesta en 24 Horas</h3>
+<p class="feature-card__desc">Nos comprometemos a responder su consulta en un plazo máximo de 24 horas hábiles. Su tranquilidad y la atención oportuna son nuestra prioridad.</p>
+</div>
+
+</div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer" role="contentinfo">
+<div class="footer__top">
+<div class="footer__brand">
+<div class="footer__logo">DZIB & ASOCIADOS</div>
+<p class="footer__tagline">Excelencia jurídica al servicio de quienes exigen los mejores resultados. Desde 2004 en la Ciudad de México.</p>
+</div>
+<nav class="footer__nav" aria-label="Enlaces del pie de página">
+<a href="index.html">Inicio</a>
+<a href="practica.html">Práctica</a>
+<a href="equipo.html">Equipo</a>
+<a href="casos.html">Casos</a>
+<a href="contacto.html">Contacto</a>
+</nav>
+<div class="footer__social">
+<a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+<a href="#" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+<a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+</div>
+</div>
+<div class="footer__bottom">
+<p>&copy; 2026 Dzib & Asociados. Todos los derechos reservados.</p>
+</div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   GSAP & ScrollTrigger Setup
+   ═══════════════════════════════════════════ */
+gsap.registerPlugin(ScrollTrigger);
+
+/* ─── Theme Toggle ─── */
+const themeToggle = document.querySelector('.theme-toggle');
+const savedTheme = localStorage.getItem('dzib-theme');
+if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('dzib-theme', next);
+});
+
+/* ─── Set initial states ─── */
+gsap.set('.reveal', { opacity: 0, y: 40 });
+
+/* ─── Mobile Nav Toggle ─── */
+const navToggle = document.querySelector('.navbar__toggle');
+const navLinks = document.querySelector('.navbar__links');
+navToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('active');
+  navToggle.setAttribute('aria-expanded', isOpen);
+});
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('active');
+    navToggle.setAttribute('aria-expanded', false);
+  });
+});
+
+/* ─── Navbar Scroll ─── */
+const navbar = document.querySelector('.navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ─── GSAP Scroll Reveals ─── */
+const reveals = document.querySelectorAll('.reveal');
+reveals.forEach((el, i) => {
+  gsap.fromTo(el,
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      },
+      delay: (i % 3) * 0.1
+    }
+  );
+});
+
+/* ─── Feature Cards Stagger ─── */
+const featureCards = document.querySelectorAll('.feature-card');
+if (featureCards.length) {
+  gsap.fromTo(featureCards,
+    { opacity: 0, y: 50, scale: 0.97 },
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.7,
+      ease: 'power3.out',
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: featureCards[0],
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    }
+  );
+}
+</script>
+
+</body>
+</html>
